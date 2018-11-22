@@ -52,10 +52,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /*
 ----------Маршруты---------
 */
+
+   
+
+
 $route['news']['GET'] = 'News';
 $route['news/(:num)']['GET'] = 'News/View/$1';
 $route['news/(:num)']['PUT'] = 'News/Update/$1';
-$route['news/(:num)']['DELETE'] = 'News/Delete/$1';
+$route['news/(:num)']['delete'] = 'News/Delete/$1';
 $route['news/create']['POST'] = 'News/Create';
 /*
 ----------Зарезервированные маршруты-----------

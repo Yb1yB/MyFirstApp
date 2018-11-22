@@ -8,9 +8,17 @@ class News extends MY_Controller
 /*
 ---------Метод для вывода данных в JSON формате
 */
+
+    protected function headerq()
+    {
+        $this->output->set_header('Access-Control-Allow-Origin: http://localhost:8080');
+        $this->output->set_header('Access-Control-Allow-Methods: POST,GET,PUT,DELETE');
+        $this->output->set_header('Access-Control-Allow-Headers: *');
+    }
+
     protected function inJSON($arr)
     {
-       
+        $this->headerq();
         $str = $this->output->set_content_type('application/json')->set_output(json_encode($arr, JSON_UNESCAPED_UNICODE));
     }
 /*
@@ -44,17 +52,27 @@ class News extends MY_Controller
 */
     public function Delete($id)
     {
+        $this->headerq();
         $this->news_model->delete_new($id);
         return true;
-    }
+        }
+    
 /*
 --------Метод для создания новости в формате JSON
 */
     public function Create()
     {
-        $obj = (object) array('title'=>'Новость о выборах' , 'text'=>'Выбор пройдут 24.09');
-        $this->news_model->create_new($obj);
-        return true;
+        $this->headerq();
+
+        $json_str = file_get_contents('php://input');
+
+        $json_obj = json_decode($json_str);
+
+        if ($json_obj != NULL){
+
+        $this->news_model->create_new($json_obj);
+        return var_dump($json_obj);
+        }
     }
 
 }
