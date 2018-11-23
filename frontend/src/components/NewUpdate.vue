@@ -3,7 +3,7 @@
   <v-container>
     <v-layout>
     <v-flex xs12 sm6 offset-sm3>
-      <v-card v-for="value in news" v-bind:key="value.id">
+      <v-card>
 
           <section v-if="image">
         <v-img
@@ -31,7 +31,7 @@
 
         <v-card-title>
           <div>
-            <span class="grey--text">{{value.timeCreate}}</span><br>
+            <span class="grey--text"></span><br>
           </div>
         </v-card-title>
         <v-text-field
@@ -69,9 +69,8 @@ import router from '../plugins/router'
   export default {
    data () {
       return {
-          q: '',
         news: '',
-        image: '',
+        image: null,
         title: '',
         text: '',
         rules: {
@@ -87,12 +86,20 @@ import router from '../plugins/router'
         method: 'get',
         url: 'http://localhost/myfirstapp/backend/index.php/news/view/'+ this.$route.params.id
       })
-      .then(response => (this = response.data))
-       console.log(q)
-      
-     // this.image 
+      .then(response => (this.news = response.data))
+
+     this.image = this.news.image
     },
     methods: {
+
+        inStr(){
+         
+            this.image = this.news.image
+            //this.title = value.title
+            //this.text = value.text
+          
+        },
+
         submit(){
             axios({
                 method: 'post',
@@ -105,8 +112,6 @@ import router from '../plugins/router'
                     image : this.image,
                     text : this.text
                 }
-            }).then(function(response){
-                console.log(response.data)
             })
             router.push({name:'news'})
         }

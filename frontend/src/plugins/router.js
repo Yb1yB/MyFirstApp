@@ -12,7 +12,7 @@ export default new VueRouter({
         {
             path: '/news',
             name: 'news',
-            component: News
+            component: News,
         },
         {
             path: '/news/create',
@@ -27,13 +27,12 @@ export default new VueRouter({
         },
         {
             path: '*',
-            name: 'news',
-            component: News
+           redirect: '/news'
         },
         {
             path: '/news/update/:id',
             name: 'newsUpdate',
             component: NewsUpdate
         },
-    ]
+    ],
 })

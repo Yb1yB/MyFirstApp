@@ -18,14 +18,16 @@
         </v-img>
         <v-card-title>
           <div>
-            <span class="grey--text">{{value.timeUpdate}}</span><br>
+            <span class="grey--text">{{value.timeCreate}}</span><br>
           </div>
         </v-card-title>
         <v-card-text>
           {{value.text}}
         </v-card-text>
         <v-card-actions>
-           <v-btn flat color="blue" @click="submit()">Вернуться в ленту</v-btn>
+           <router-link to='/news' class="link">
+           <v-btn flat color="blue">Вернуться в ленту</v-btn>
+         </router-link>
         </v-card-actions>
         
       </v-card>
@@ -36,7 +38,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import router from '../plugins/router';
 
   export default {
@@ -47,17 +48,12 @@ import router from '../plugins/router';
       };
     },
     mounted() {
-      axios({
+      this.axios({
         method: 'get',
         url: 'http://localhost/myfirstapp/backend/index.php/news/view/'+ this.$route.params.id
       })
       .then(response => (this.news = response.data))
     },
-    method:{
-      submit(){
-        router.push({name:'news'})
-      }
-    }
   }
   
 </script>

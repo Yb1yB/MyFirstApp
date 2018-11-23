@@ -61,6 +61,8 @@ $route['news/(:num)']['GET'] = 'News/View/$1';
 $route['news/(:num)']['PUT'] = 'News/Update/$1';
 $route['news/(:num)']['delete'] = 'News/Delete/$1';
 $route['news/create']['POST'] = 'News/Create';
+
+$route['migrate/'] = 'Migrate/index';
 /*
 ----------Зарезервированные маршруты-----------
 */

@@ -3,7 +3,7 @@
 class News_model extends CI_Model 
 {
 
-        private $DB_NAME = 'news';
+        private $DB_NAME = 'newstab';
 
     public function __construct()
     {
@@ -18,7 +18,6 @@ class News_model extends CI_Model
 */
 public function get_news()
 {       
-        $DB_NAME = 'news';
         $query = $this->db->get($this->DB_NAME);
         return $query->result_array();
 }
@@ -43,6 +42,7 @@ public function update_new($id, $obj)
 {
         $this->db->where('id', $id);
         $this->db->update($this->DB_NAME, $obj);
+        return true;
 }
 
 public function create_new($obj)

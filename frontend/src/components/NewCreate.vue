@@ -23,7 +23,7 @@
         </v-img>
 </section>
   
-         <v-text-field class="title"  v-model="image">
+         <v-text-field class="title" v-model="image">
         <template slot="label">
           Вставте <strong>ссылку</strong> на изображение <v-icon style="vertical-align: middle">find_in_page</v-icon>
         </template>
@@ -31,7 +31,7 @@
 
         <v-card-title>
           <div>
-            <span class="grey--text">Number 10</span><br>
+            <span class="grey--text">Дата новости будет задана автоматически</span><br>
           </div>
         </v-card-title>
         <v-text-field
@@ -53,6 +53,9 @@
         ></v-textarea>
         <v-card-actions>
           <v-btn flat color="blue" @click="submit">Опубликовать новость</v-btn>
+          <router-link to='/news' class="link">
+           <v-btn flat color="blue">Вернуться в ленту</v-btn>
+         </router-link>
         </v-card-actions>
       </v-card>
      
@@ -64,11 +67,13 @@
 
 <script>
 import axios from 'axios'
-import router from '../plugins/router'
+//import router from '../plugins/router'
 
   export default {
    data () {
       return {
+        error: null,
+        inf: null,
         image: '',
         title: '',
         text: '',
@@ -82,8 +87,9 @@ import router from '../plugins/router'
     },
     
     methods: {
-        submit(){
-            axios({
+     async submit(){
+       try {
+          await axios({
                 method: 'post',
                 url: 'http://localhost/myfirstapp/backend/index.php/News/Create',
                 headers: {
@@ -94,11 +100,17 @@ import router from '../plugins/router'
                     image : this.image,
                     text : this.text
                 }
-            }).then(function(response){
-                console.log(response.data)
-            })
-            router.push({name:'news'})
-        }
+            }).then(response=>{this.inf = response})
+              .catch(error=>this.error = error)
+       } catch (error) {
+         return error
+       } finally {
+          this.$router.push({name: 'news'})
+       }
+            
+        },
+
+    
     }
   }
   
